@@ -15,7 +15,40 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from core.views import home
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-]
+	#URLs Gerais
+	path('', home, name='home'),
+	path('admin/', admin.site.urls),
+
+	#URL do perfil
+	path('perfil/', perfil, name='perfil'),
+
+	#URLs de registro de Usuário
+	path('registro/', registro, name='registro'),
+	path('dados/<int:id>/', dados, name='dados'),
+
+	#Autenticação
+	path('login/', auth_views.LoginView.as_view(), name='login'),
+	path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+
+    #URLs de Área
+    path('areas/', areas_listar, name='areas'),
+    path('area_cadastrar/', area_cadastrar, name='area_cadastrar'),
+    path('area_atualizar/<int:id>', area_atualizar, name='area_atualizar'),
+    path('area_remover/<int:id>', area_remover, name='area_remover'),
+
+    #URLs de Públicos
+    path('publicos/', publicos_listar, name='publicos'),
+    path('publico_cadastrar/', publico_cadastrar, name='publico_cadastrar'),
+    path('publico_atualizar/<int:id>', publico_atualizar, name='publico_atualizar'),
+    path('publico_remover/<int:id>', publico_remover, name='publico_remover'),
+
+    #URLs de Cursos
+    path('cursos/', cursos_listar, name='cursos'),
+    path('curso_cadastrar/', curso_cadastrar, name='curso_cadastrar'),
+    path('curso_atualizar/<int:id>', curso_atualizar, name='curso_atualizar'),
+    path('curso_remover/<int:id>', curso_remover, name='curso_remover'),
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
